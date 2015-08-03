@@ -17,11 +17,14 @@
 *.class
 
 # generated files
-/bin/
-/gen/
+bin/
+gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
 
 .settings
+build/
+.gradle/
+.idea
 *.iml
