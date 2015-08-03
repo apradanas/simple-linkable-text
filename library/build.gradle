@@ -1,4 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.apradanas'
+version = '1.0.0'
 
 android {
     compileSdkVersion 22
@@ -8,7 +13,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName version
     }
     buildTypes {
         release {
@@ -17,6 +22,85 @@ android {
         }
     }
 }
+
+def siteUrl = 'https://github.com/apradanas/simple-linkable-text'      // Homepage URL of the library
+def gitUrl = 'https://github.com/apradanas/simple-linkable-text.git'   // Git repository URL
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "simple-linkable-text"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'A simple linkable text modifier'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'apradanas'
+                        name 'Aditya Pradana Sugiarto'
+                        email 'adit@apradanas.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
+}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
