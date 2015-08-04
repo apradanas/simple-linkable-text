@@ -1,5 +1,8 @@
 # Simple Linkable Text
 
+ [ ![Download](https://api.bintray.com/packages/apradanas/maven/simple-linkable-text/images/download.svg) ](https://bintray.com/apradanas/maven/simple-linkable-text/_latestVersion)
+ ![](https://img.shields.io/badge/platform-android-green.svg)
+
 Simple way to create link text, such as @username or #hashtag, in Android TextView and EditText
 
 ![](https://raw.githubusercontent.com/apradanas/simple-linkable-text/master/screenshots/slt_demo.gif)
