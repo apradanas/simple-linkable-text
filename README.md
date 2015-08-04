@@ -1,8 +1,16 @@
 # Simple Linkable Text
 
-Simple way to create link text, such as @username or #hashtag in Android TextView and EditText
+Simple way to create link text, such as @username or #hashtag, in Android TextView and EditText
 
 ![](https://raw.githubusercontent.com/apradanas/simple-linkable-text/master/screenshots/slt_demo.gif)
+
+Features
+--------
+
+- Match single strings or regex pattern to set links
+- Change the color of the linked text
+- Set the underlined of the linked text
+- Specify click actions of a specific word
 
 Usage
 -----
@@ -77,13 +85,25 @@ LinkableEditText editText = (LinkableEditText) findViewById(R.id.editText);
 editText.addLinks(links);
 ```
 
-Features
---------
+Installation
+------------
+##### Gradle
 
-- Match single strings or regex pattern to set links
-- Change the color of the linked text
-- Set the underlined of the linked text
-- Specify click actions of a specific word
+Add repository
+
+```
+repositories {
+    maven {
+        url "http://dl.bintray.com/apradanas/maven"
+    }
+}
+```
+
+Add dependency
+
+```
+compile 'com.apradanas.simplelinkabletext:library:1.0.0@aar'
+```
 
 
 License
