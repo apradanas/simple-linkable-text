@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-group = 'com.apradanas'
+group = 'com.apradanas.simplelinkabletext'
 version = '1.0.0'
 
 android {
