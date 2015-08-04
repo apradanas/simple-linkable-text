@@ -2,6 +2,8 @@
 
 Simple way to create link text, such as @username or #hashtag in Android TextView and EditText
 
+![](https://raw.githubusercontent.com/apradanas/simple-linkable-text/master/screenshots/slt_demo.gif)
+
 Usage
 -----
 ### In your XML layout
