@@ -92,16 +92,6 @@ Installation
 ------------
 ##### Gradle
 
-Add repository
-
-```
-repositories {
-    maven {
-        url "http://dl.bintray.com/apradanas/maven"
-    }
-}
-```
-
 Add dependency
 
 ```
