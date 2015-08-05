@@ -3,6 +3,8 @@ package com.apradanas.simplelinkabletextsample;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.apradanas.simplelinkabletext.Link;
@@ -53,12 +55,20 @@ public class MainActivity extends AppCompatActivity {
         links.add(linkUsername);
         links.add(linkAnd);
 
-        LinkableTextView textView = (LinkableTextView) findViewById(R.id.textView);
+        final LinkableTextView textView = (LinkableTextView) findViewById(R.id.textView);
         textView.setText("#test #LinkableTextView: detecting #hashtags and @username")
                 .addLinks(links)
                 .build();
 
-        LinkableEditText editText = (LinkableEditText) findViewById(R.id.editText);
+        final LinkableEditText editText = (LinkableEditText) findViewById(R.id.editText);
         editText.addLinks(links);
+
+        Button submitButton = (Button) findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setText(editText.getText().toString()).build();
+            }
+        });
     }
 }

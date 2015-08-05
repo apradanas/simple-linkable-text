@@ -133,6 +133,8 @@ public class LinkModifier {
         if(mViewType == ViewType.EDIT_TEXT) {
             mText = mSpannable.toString();
             removePreviousSpans();
+        } else {
+            mSpannable = null;
         }
 
         convertPatternsToLinks();
