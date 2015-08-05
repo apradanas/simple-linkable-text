@@ -96,7 +96,7 @@ Installation
 Add dependency
 
 ```
-compile 'com.apradanas.simplelinkabletext:library:1.0.0@aar'
+compile 'com.apradanas.simplelinkabletext:library:1.0.1@aar'
 ```
 
 
