@@ -1,6 +1,5 @@
 package com.apradanas.simplelinkabletext;
 
-import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -26,8 +25,7 @@ public class LinkModifier {
     private List<Link> mFoundLinks = new ArrayList<>();
 
     private String mText;
-    private SpannableString mSpannable;
-    private Editable mEditable;
+    private Spannable mSpannable;
 
     private ViewType mViewType;
 
@@ -59,20 +57,12 @@ public class LinkModifier {
         this.mText = mText;
     }
 
-    public SpannableString getSpannable() {
+    public Spannable getSpannable() {
         return mSpannable;
     }
 
-    public void setSpannable(SpannableString mSpannable) {
+    public void setSpannable(Spannable mSpannable) {
         this.mSpannable = mSpannable;
-    }
-
-    public Editable getEditable() {
-        return mEditable;
-    }
-
-    public void setEditable(Editable mEditable) {
-        this.mEditable = mEditable;
     }
 
     public void addLinkToSpan(Link link) {
@@ -94,21 +84,9 @@ public class LinkModifier {
             if (start >= 0) {
                 int end = start + link.getText().length();
 
-                switch (mViewType) {
-                    case TEXT_VIEW:
-                        applyLink(link, new Range(start, end), s);
-                        break;
-                    case EDIT_TEXT:
-                        applyLink(link, new Range(start, end));
-                        break;
-                }
+                applyLink(link, new Range(start, end), s);
             }
         }
-    }
-
-    private void applyLink(final Link link, final Range range) {
-        ClickableLinkSpan linkSpan = new ClickableLinkSpan(link, range);
-        mEditable.setSpan(linkSpan, range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     private void applyLink(final Link link, final Range range, Spannable text) {
@@ -117,9 +95,9 @@ public class LinkModifier {
     }
 
     public void removePreviousSpans() {
-        ClickableSpan[] toRemoveSpans = mEditable.getSpans(0, mEditable.length(), ClickableSpan.class);
+        ClickableSpan[] toRemoveSpans = mSpannable.getSpans(0, mSpannable.length(), ClickableSpan.class);
         for(ClickableSpan toRemoveSpan : toRemoveSpans) {
-            mEditable.removeSpan(toRemoveSpan);
+            mSpannable.removeSpan(toRemoveSpan);
         }
     }
 
@@ -153,6 +131,7 @@ public class LinkModifier {
 
     public void build() {
         if(mViewType == ViewType.EDIT_TEXT) {
+            mText = mSpannable.toString();
             removePreviousSpans();
         }
 

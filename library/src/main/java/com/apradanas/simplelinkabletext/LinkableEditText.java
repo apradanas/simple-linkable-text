@@ -72,8 +72,7 @@ public class LinkableEditText extends EditText implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        mLinkModifier.setText(s.toString());
-        mLinkModifier.setEditable(s);
+        mLinkModifier.setSpannable(s);
 
         mLinkModifier.build();
     }
