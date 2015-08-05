@@ -1,15 +1,10 @@
 package com.apradanas.simplelinkabletext;
 
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.style.ClickableSpan;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.apradanas.simplelinkabletext.util.Range;
 
@@ -112,52 +107,13 @@ public class LinkModifier {
     }
 
     private void applyLink(final Link link, final Range range) {
-        ClickableSpan span = new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                EditText et = (EditText) widget;
-                Spanned s = et.getText();
-
-                if(link.getClickListener() != null) {
-                    link.getClickListener().onClick(s.subSequence(range.start, range.end).toString());
-                }
-            }
-
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                if(link.getTextColor() != 0) {
-                    ds.setColor(link.getTextColor());
-                }
-                ds.setUnderlineText(link.isUnderlined());
-            }
-        };
-
-        mEditable.setSpan(span, range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ClickableLinkSpan linkSpan = new ClickableLinkSpan(link, range);
+        mEditable.setSpan(linkSpan, range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     private void applyLink(final Link link, final Range range, Spannable text) {
-        ClickableSpan span = new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                TextView tv = (TextView) widget;
-                Spanned s = (Spanned) tv.getText();
-
-                if(link.getClickListener() != null) {
-                    link.getClickListener().onClick(s.subSequence(range.start, range.end).toString());
-                }
-            }
-
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                if(link.getTextColor() != 0) {
-                    ds.setColor(link.getTextColor());
-                }
-                ds.setUnderlineText(link.isUnderlined());
-            }
-        };
-
-
-        text.setSpan(span, range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ClickableLinkSpan linkSpan = new ClickableLinkSpan(link, range);
+        text.setSpan(linkSpan, range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     public void removePreviousSpans() {
