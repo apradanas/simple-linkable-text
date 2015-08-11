@@ -18,6 +18,7 @@ public class LinkableEditText extends EditText implements TextWatcher {
     private List<Link> mLinks = new ArrayList<>();
 
     private LinkModifier mLinkModifier;
+    private OnTextChangedListener mOnTextChangedListener;
 
     public LinkableEditText(Context context) {
         super(context);
@@ -60,14 +61,25 @@ public class LinkableEditText extends EditText implements TextWatcher {
         return this;
     }
 
+    public LinkableEditText setTextChangedListener(OnTextChangedListener listener) {
+        mOnTextChangedListener = listener;
+        return this;
+    }
+
     @Override
     public void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
+
+        if(mOnTextChangedListener != null) {
+            mOnTextChangedListener.onTextChanged(text, start, lengthBefore, lengthAfter);
+        }
     }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        if(mOnTextChangedListener != null) {
+            mOnTextChangedListener.beforeTextChanged(s, start, count, after);
+        }
     }
 
     @Override
@@ -75,5 +87,15 @@ public class LinkableEditText extends EditText implements TextWatcher {
         mLinkModifier.setSpannable(s);
 
         mLinkModifier.build();
+
+        if(mOnTextChangedListener != null) {
+            mOnTextChangedListener.afterTextChanged(s);
+        }
+    }
+
+    public interface OnTextChangedListener {
+        void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter);
+        void beforeTextChanged(CharSequence s, int start, int count, int after);
+        void afterTextChanged(Editable s);
     }
 }
