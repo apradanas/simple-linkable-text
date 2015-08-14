@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apradanas.simplelinkabletext.Link;
+import com.apradanas.simplelinkabletext.Link.TextStyle;
 import com.apradanas.simplelinkabletext.LinkableEditText;
 import com.apradanas.simplelinkabletext.LinkableTextView;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         Link linkHashtag = new Link(Pattern.compile("(#\\w+)"))
                 .setUnderlined(true)
-                .setTextStyle(Link.TextStyle.ITALIC)
+                .setTextStyle(TextStyle.ITALIC)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Link linkUsername = new Link(Pattern.compile("(@\\w+)"))
                 .setUnderlined(false)
                 .setTextColor(Color.parseColor("#D00000"))
-                .setTextStyle(Link.TextStyle.BOLD)
+                .setTextStyle(TextStyle.BOLD)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         Link linkString = new Link("string")
                 .setTextColor(Color.BLUE)
-                .setTextStyle(Link.TextStyle.BOLD_ITALIC)
+                .setTextStyle(TextStyle.BOLD_ITALIC)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
