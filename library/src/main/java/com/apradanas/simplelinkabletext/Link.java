@@ -7,9 +7,14 @@ import java.util.regex.Pattern;
  */
 public class Link {
 
+    public enum TextStyle {
+        NORMAL, BOLD, ITALIC, BOLD_ITALIC
+    }
+
     private String mText;
     private Pattern mPattern;
     private int mTextColor = 0;
+    private TextStyle mTextStyle = TextStyle.NORMAL;
     private boolean mUnderlined = true;
 
     private OnClickListener mClickListener;
@@ -19,6 +24,7 @@ public class Link {
         this.mPattern = link.getPattern();
         this.mClickListener = link.getClickListener();
         this.mTextColor = link.getTextColor();
+        this.mTextStyle = link.getTextStyle();
         this.mUnderlined = link.isUnderlined();
     }
 
@@ -56,6 +62,15 @@ public class Link {
 
     public Link setTextColor(int textColor) {
         this.mTextColor = textColor;
+        return this;
+    }
+
+    public TextStyle getTextStyle() {
+        return mTextStyle;
+    }
+
+    public Link setTextStyle(TextStyle textStyle) {
+        this.mTextStyle = textStyle;
         return this;
     }
 

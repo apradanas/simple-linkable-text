@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         Link linkHashtag = new Link(Pattern.compile("(#\\w+)"))
                 .setUnderlined(true)
+                .setTextStyle(Link.TextStyle.ITALIC)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Link linkUsername = new Link(Pattern.compile("(@\\w+)"))
                 .setUnderlined(false)
                 .setTextColor(Color.parseColor("#D00000"))
+                .setTextStyle(Link.TextStyle.BOLD)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         Link linkString = new Link("string")
                 .setTextColor(Color.BLUE)
+                .setTextStyle(Link.TextStyle.BOLD_ITALIC)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
