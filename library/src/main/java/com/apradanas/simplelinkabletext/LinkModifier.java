@@ -129,6 +129,30 @@ public class LinkModifier {
         }
     }
 
+    private void validateTextLinks() {
+        int size = mFoundLinks.size();
+        int i = 0;
+        while (i < size) {
+            if (mFoundLinks.get(i).getPattern() == null) {
+                addLinksFromText(mFoundLinks.get(i));
+
+                mFoundLinks.remove(i);
+                size--;
+            } else {
+                i++;
+            }
+        }
+    }
+
+    private void addLinksFromText(Link link) {
+        Pattern pattern = Pattern.compile(Pattern.quote(link.getText()));
+        Matcher matcher = pattern.matcher(mText);
+
+        while (matcher.find()) {
+            mFoundLinks.add(link);
+        }
+    }
+
     public void build() {
         if(mViewType == ViewType.EDIT_TEXT) {
             mText = mSpannable.toString();
@@ -138,6 +162,7 @@ public class LinkModifier {
         }
 
         convertPatternsToLinks();
+        validateTextLinks();
 
         for (Link link : mFoundLinks) {
             addLinkToSpan(link);

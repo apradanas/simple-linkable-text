@@ -63,6 +63,10 @@ public class LinkableTextView extends TextView {
         return this;
     }
 
+    public List<Link> getFoundLinks() {
+        return mLinkModifier.getFoundLinks();
+    }
+
     public LinkableTextView build() {
         mLinkModifier.build();
 
