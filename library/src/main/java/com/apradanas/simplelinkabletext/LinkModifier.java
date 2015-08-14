@@ -1,6 +1,5 @@
 package com.apradanas.simplelinkabletext;
 
-import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
