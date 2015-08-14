@@ -61,6 +61,10 @@ public class LinkableEditText extends EditText implements TextWatcher {
         return this;
     }
 
+    public List<Link> getFoundLinks() {
+        return mLinkModifier.getFoundLinks();
+    }
+
     public LinkableEditText setTextChangedListener(OnTextChangedListener listener) {
         mOnTextChangedListener = listener;
         return this;

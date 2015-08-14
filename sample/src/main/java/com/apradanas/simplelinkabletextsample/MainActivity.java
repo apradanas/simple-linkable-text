@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apradanas.simplelinkabletext.Link;
+import com.apradanas.simplelinkabletext.Link.TextStyle;
 import com.apradanas.simplelinkabletext.LinkableEditText;
 import com.apradanas.simplelinkabletext.LinkableTextView;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         Link linkHashtag = new Link(Pattern.compile("(#\\w+)"))
                 .setUnderlined(true)
+                .setTextStyle(TextStyle.ITALIC)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Link linkUsername = new Link(Pattern.compile("(@\\w+)"))
                 .setUnderlined(false)
                 .setTextColor(Color.parseColor("#D00000"))
+                .setTextStyle(TextStyle.BOLD)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
@@ -42,8 +46,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        Link linkAnd = new Link("and")
+        Link linkString = new Link("string")
                 .setTextColor(Color.BLUE)
+                .setTextStyle(TextStyle.BOLD_ITALIC)
                 .setClickListener(new Link.OnClickListener() {
                     @Override
                     public void onClick(String text) {
@@ -54,11 +59,12 @@ public class MainActivity extends AppCompatActivity {
         List<Link> links = new ArrayList<>();
         links.add(linkHashtag);
         links.add(linkUsername);
-        links.add(linkAnd);
+        links.add(linkString);
 
         final LinkableTextView textView = (LinkableTextView) findViewById(R.id.textView);
         final Button submitButton = (Button) findViewById(R.id.submitButton);
         final LinkableEditText editText = (LinkableEditText) findViewById(R.id.editText);
+        final TextView foundLinksView = (TextView) findViewById(R.id.foundLinks);
 
         textView.setText("#LinkableTextView: detecting #hashtags and @username")
                 .addLinks(links)
@@ -88,6 +94,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 submitButton.setEnabled(s.length() > 0);
+
+                List<Link> foundLinks = editText.getFoundLinks();
+
+                int i = 0;
+                int size = foundLinks.size();
+                String found = "";
+                while (i < size) {
+                    found += foundLinks.get(i).getText();
+                    found += i < size - 1 ? ", " : "";
+                    i++;
+                }
+                foundLinksView.setText("Found: " + found);
+
+                int visible = size > 0 ? View.VISIBLE : View.GONE;
+                foundLinksView.setVisibility(visible);
             }
         });
 

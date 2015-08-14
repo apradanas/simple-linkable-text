@@ -4,6 +4,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ClickableSpan;
+import android.text.style.StyleSpan;
 
 import com.apradanas.simplelinkabletext.util.Range;
 
@@ -92,12 +93,20 @@ public class LinkModifier {
     private void applyLink(final Link link, final Range range, Spannable text) {
         ClickableLinkSpan linkSpan = new ClickableLinkSpan(link, range);
         text.setSpan(linkSpan, range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        StyleSpan styleSpan = new StyleSpan(link.getTextStyle().ordinal());
+        text.setSpan(styleSpan, range.start, range.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     public void removePreviousSpans() {
         ClickableSpan[] toRemoveSpans = mSpannable.getSpans(0, mSpannable.length(), ClickableSpan.class);
         for(ClickableSpan toRemoveSpan : toRemoveSpans) {
             mSpannable.removeSpan(toRemoveSpan);
+        }
+
+        StyleSpan[] toRemoveStyleSpans = mSpannable.getSpans(0, mSpannable.length(), StyleSpan.class);
+        for(StyleSpan toRemoveStyleSpan : toRemoveStyleSpans) {
+            mSpannable.removeSpan(toRemoveStyleSpan);
         }
     }
 
@@ -129,6 +138,30 @@ public class LinkModifier {
         }
     }
 
+    private void validateTextLinks() {
+        int size = mFoundLinks.size();
+        int i = 0;
+        while (i < size) {
+            if (mFoundLinks.get(i).getPattern() == null) {
+                addLinksFromText(mFoundLinks.get(i));
+
+                mFoundLinks.remove(i);
+                size--;
+            } else {
+                i++;
+            }
+        }
+    }
+
+    private void addLinksFromText(Link link) {
+        Pattern pattern = Pattern.compile(Pattern.quote(link.getText()));
+        Matcher matcher = pattern.matcher(mText);
+
+        while (matcher.find()) {
+            mFoundLinks.add(link);
+        }
+    }
+
     public void build() {
         if(mViewType == ViewType.EDIT_TEXT) {
             mText = mSpannable.toString();
@@ -138,6 +171,7 @@ public class LinkModifier {
         }
 
         convertPatternsToLinks();
+        validateTextLinks();
 
         for (Link link : mFoundLinks) {
             addLinkToSpan(link);

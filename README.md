@@ -8,13 +8,26 @@ Simple way to create link text, such as @username or #hashtag, in Android TextVi
 
 ![](https://raw.githubusercontent.com/apradanas/simple-linkable-text/master/screenshots/slt_demo.gif)
 
+Installation
+------------
+##### Gradle
+
+Add dependency
+
+```
+compile 'com.apradanas.simplelinkabletext:library:1.0.3@aar'
+```
+
+
 Features
 --------
 
 - Match single strings or regex pattern to set links
 - Change the color of the linked text
+- Set the style of the linked text: **BOLD**, *ITALIC*, or ***BOLD_ITALIC***
 - Set the underlined of the linked text
 - Specify click actions of a specific word
+- OnTextChangedListener listener for LinkableEditText
 
 Usage
 -----
@@ -39,11 +52,14 @@ Usage
 ### In your Activity / Fragment
 
 ```
-// set rules
+/*
+**	define rules
+*/
 
 // find hashtags
 Link linkHashtag = new Link(Pattern.compile("(#\\w+)"))
                 	.setUnderlined(true)
+                	.setTextStyle(TextStyle.ITALIC)
                 	.setClickListener(new Link.OnClickListener() {
                     	@Override
                     	public void onClick(String text) {
@@ -55,6 +71,7 @@ Link linkHashtag = new Link(Pattern.compile("(#\\w+)"))
 Link linkUsername = new Link(Pattern.compile("(@\\w+)"))
                 	.setUnderlined(false)
                 	.setTextColor(Color.parseColor("#D00000"))
+                	.setTextStyle(TextStyle.BOLD)
                 	.setClickListener(new Link.OnClickListener() {
                    		@Override
                     	public void onClick(String text) {
@@ -62,9 +79,10 @@ Link linkUsername = new Link(Pattern.compile("(@\\w+)"))
                     	}
                 	});
 
-// match string "and""
-Link linkAnd = new Link("and")
+// match string "string"
+Link linkAnd = new Link("string")
                		.setTextColor(Color.BLUE)
+               		.setTextStyle(TextStyle.BOLD_ITALIC)
                 	.setClickListener(new Link.OnClickListener() {
                    		@Override
                     	public void onClick(String text) {
@@ -77,26 +95,21 @@ links.add(linkHashtag);
 links.add(linkUsername);
 links.add(linkAnd);
 
-
-// add rules to View and build links
-
+/*
+**	add rules to LinkableTextView
+**	then build()
+*/
 LinkableTextView textView = (LinkableTextView) findViewById(R.id.textView);
 textView.setText("#test #LinkableTextView: detecting #hashtags and @username")
 		.addLinks(links)
 		.build();
 
+/*
+**	add rules to LinkableEditText
+**	no need to build()
+*/
 LinkableEditText editText = (LinkableEditText) findViewById(R.id.editText);
 editText.addLinks(links);
-```
-
-Installation
-------------
-##### Gradle
-
-Add dependency
-
-```
-compile 'com.apradanas.simplelinkabletext:library:1.0.2@aar'
 ```
 
 
