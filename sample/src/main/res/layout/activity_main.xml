@@ -20,6 +20,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"/>
 
+    <TextView
+        android:id="@+id/foundLinks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:visibility="gone"/>
+
     <Button
         android:id="@+id/submitButton"
         android:layout_width="match_parent"

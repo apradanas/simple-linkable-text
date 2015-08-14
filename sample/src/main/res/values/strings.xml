@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Simple Linkable Text Sample</string>
+    <string name="app_name">Simple Linkable Text</string>
 
     <string name="submit">Submit</string>
     <string name="action_settings">Settings</string>
